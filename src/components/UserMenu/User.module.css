@@ -13,4 +13,11 @@
 .btnLogOut {
   width: 60px;
   height: 30px;
+  background-color: greenyellow;
+
+  cursor: pointer;
+}
+
+.btnLogOut:hover {
+  color: red;
 }
