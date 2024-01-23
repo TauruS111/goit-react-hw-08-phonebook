@@ -37,8 +37,10 @@ const contactsSlice = createSlice({
         );
         state.isLoading = false;
       })
+      .addCase(fetchContactsThunk.pending, handlePending)
+      .addCase(fetchAddContactThunk.pending, handlePending)
+      .addCase(fetchDeleteContactThunk.pending, handlePending)
 
-      .addMatcher(action => action.type.endsWith('/pending'), handlePending)
       .addMatcher(action => action.type.endsWith('/rejected'), handleRejected);
   },
 });

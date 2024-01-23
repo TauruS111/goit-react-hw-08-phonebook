@@ -1,17 +1,17 @@
-import css from './Loader.module.css';
-import { Hourglass } from 'react-loader-spinner';
-
 import React from 'react';
+import css from './Loader.module.css';
+import { Watch } from 'react-loader-spinner';
 
 const Loader = () => {
   return (
     <div className={css.loadersWrapper}>
-      <Hourglass
+      <Watch
         visible={true}
         height="80"
         width="80"
-        ariaLabel="hourglass-loading"
-        colors={['#306cce', '#72a1ed']}
+        radius="48"
+        color="blue"
+        ariaLabel="watch-loading"
       />
     </div>
   );

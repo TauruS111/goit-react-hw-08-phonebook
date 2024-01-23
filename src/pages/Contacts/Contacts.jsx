@@ -1,21 +1,18 @@
+import { ContactForm } from 'components/ContactForm/ContactForm';
+import { ContactList } from 'components/ContactList/ContactList';
+import { Filter } from 'components/Filter/Filter';
 import React, { useEffect } from 'react';
-
-import { ContactForm } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContactsThunk } from 'slice/contacts/thunk';
-import Loader from './Loader/Loader';
 
-const App = () => {
-  const { isLoading, error, contacts } = useSelector(state => state.contacts);
+const Contacts = () => {
+  const { error, contacts } = useSelector(state => state.contacts);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchContactsThunk());
   }, [dispatch]);
   return (
     <div className="container">
-      {isLoading && <Loader />}
       {error && <p> {error} </p>}
       <h1>Phonebook</h1>
       <ContactForm />
@@ -27,4 +24,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Contacts;

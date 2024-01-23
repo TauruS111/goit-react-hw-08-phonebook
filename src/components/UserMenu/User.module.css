@@ -1,0 +1,16 @@
+.logOut {
+  display: flex;
+  justify-content: right;
+  margin-right: 40px;
+  margin-top: 10px;
+}
+
+.userEmail {
+  margin-right: 20px;
+  margin-top: 5px;
+}
+
+.btnLogOut {
+  width: 60px;
+  height: 30px;
+}

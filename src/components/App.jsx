@@ -1,29 +1,52 @@
-import React, { useEffect } from 'react';
-
-import { ContactForm } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchContactsThunk } from 'slice/thunk';
 import Loader from './Loader/Loader';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Layout from './Layout/Layout';
+import { currentUsersThunk } from 'slice/auth/thunk';
+import { lazy, useEffect } from 'react';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+
+const Home = lazy(() => import('pages/Home/Home'));
+const SingUp = lazy(() => import('pages/SingUp/SingUp'));
+const LogIn = lazy(() => import('pages/LogIn/LogIn'));
+const Contacts = lazy(() => import('pages/Contacts/Contacts'));
 
 const App = () => {
-  const { isLoading, error, contacts } = useSelector(state => state.contacts);
+  const { isLoading } = useSelector(state => state.contacts);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchContactsThunk());
+    dispatch(currentUsersThunk());
   }, [dispatch]);
+
   return (
-    <div className="container">
+    <>
       {isLoading && <Loader />}
-      {error && <p> {error} </p>}
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <h2>Contacts</h2>
-      <h4>Find contacts by name</h4>
-      <Filter />
-      {contacts && <ContactList />}
-    </div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route
+            path="contacts"
+            element={
+              <PrivateRoute component={<Contacts />} redirectTo="/login" />
+            }
+          />
+          <Route
+            path="registration"
+            element={
+              <PublicRoute component={<SingUp />} redirectTo="/contacts" />
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <PublicRoute component={<LogIn />} redirectTo="/contacts" />
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Route>
+      </Routes>
+    </>
   );
 };
 
